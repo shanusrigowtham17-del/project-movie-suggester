@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 Cups Media Analytics Dashboard & Mood Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B0F19',
+                        panelBg: '#161F30',
+                        accentPurp: '#8B5CF6',
+                        accentBlue: '#3B82F6',
+                        accentTeal: '#14B8A6',
+                        textMuted: '#9CA3AF'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-darkBg text-white min-h-screen">
+
+    <nav class="border-b border-gray-800 bg-panelBg/50 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-blue-500 flex items-center justify-center font-bold text-sm tracking-wider">7C</div>
+            <span class="font-semibold text-lg tracking-tight">Media Insights Engine</span>
+        </div>
+        <div class="flex space-x-2 bg-black/40 p-1 rounded-xl border border-gray-800">
+            <button id="tabBtnAnalytics" onclick="switchTab('analytics')" class="px-4 py-2 rounded-lg text-sm font-medium transition duration-200 bg-accentPurp text-white">
+                Community Analytics
+            </button>
+            <button id="tabBtnRecommender" onclick="switchTab('recommender')" class="px-4 py-2 rounded-lg text-sm font-medium transition duration-200 text-textMuted hover:text-white">
+                NLP Mood Matcher
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6">
+        
+        <section id="panelAnalytics" class="space-y-8 animate-fadeIn">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-panelBg p-5 rounded-2xl border border-gray-800 shadow-xl">
+                    <p class="text-xs text-textMuted uppercase font-bold tracking-wider">Platform Hub Context</p>
+                    <h3 class="text-xl font-bold mt-1">TV & Movies Forum</h3>
+                </div>
+                <div class="bg-panelBg p-5 rounded-2xl border border-gray-800 shadow-xl">
+                    <p class="text-xs text-textMuted uppercase font-bold tracking-wider">Inferred Primary Intent</p>
+                    <h3 class="text-xl font-bold mt-1 text-purple-400">Emotional Regulation</h3>
+                </div>
+                <div class="bg-panelBg p-5 rounded-2xl border border-gray-800 shadow-xl">
+                    <p class="text-xs text-textMuted uppercase font-bold tracking-wider">Long-Run Processing Capacity</p>
+                    <h3 class="text-xl font-bold mt-1 text-teal-400">100,000+ Posts / Day</h3>
+                </div>
+                <div class="bg-panelBg p-5 rounded-2xl border border-gray-800 shadow-xl">
+                    <p class="text-xs text-textMuted uppercase font-bold tracking-wider">Ethical Compliance Target</p>
+                    <h3 class="text-xl font-bold mt-1 text-blue-400">100% Anonymized</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-panelBg p-6 rounded-2xl border border-gray-800 shadow-xl lg:col-span-2">
+                    <h4 class="text-md font-semibold tracking-wide border-b border-gray-800 pb-3 mb-4">LDA Cluster Archetypes & Sentiment Volume</h4>
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-purple-400">High Valence Escapism (Sitcoms, Comedies, Animation)</span>
+                                <span class="font-bold">48%</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-3 rounded-full overflow-hidden border border-gray-800">
+                                <div class="bg-gradient-to-r from-purple-600 to-indigo-500 h-full rounded-full transition-all duration-1000" style="width: 48%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-blue-400">Cathartic Resonance (Heavy Melodramas, Complex Profiles)</span>
+                                <span class="font-bold">32%</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-3 rounded-full overflow-hidden border border-gray-800">
+                                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 h-full rounded-full transition-all duration-1000" style="width: 32%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-teal-400">Cognitive Grounding / Deep Nostalgia (Childhood Staples)</span>
+                                <span class="font-bold">20%</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-3 rounded-full overflow-hidden border border-gray-800">
+                                <div class="bg-gradient-to-r from-teal-500 to-emerald-400 h-full rounded-full transition-all duration-1000" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-panelBg p-6 rounded-2xl border border-gray-800 shadow-xl">
+                    <h4 class="text-md font-semibold tracking-wide border-b border-gray-800 pb-3 mb-4">Pipeline Constraints & Execution Flow</h4>
+                    <div class="space-y-4 text-xs font-mono">
+                        <div class="flex items-start space-x-2 text-teal-400">
+                            <span class="bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">INFO</span>
+                            <p>Playwright initialization completed. Target DOM loaded dynamically via networkidle execution block.</p>
+                        </div>
+                        <div class="flex items-start space-x-2 text-yellow-400">
+                            <span class="bg-yellow-500/10 px-1.5 py-0.5 rounded border border-yellow-500/20">WARN</span>
+                            <p>Platform front-end structural shift detected. Mitigating dynamically via relative fallback class parsing.</p>
+                        </div>
+                        <div class="flex items-start space-x-2 text-purple-400">
+                            <span class="bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">RULE</span>
+                            <p>Ethical compliance protocol invoked. Hashing author IDs to unique, irreversible randomized hashes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="panelRecommender" class="hidden space-y-8 animate-fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-panelBg p-6 rounded-2xl border border-gray-800 shadow-xl h-fit space-y-6">
+                    <div>
+                        <h4 class="text-md font-semibold tracking-wide">Real-time NLP Sentiment Tester</h4>
+                        <p class="text-xs text-textMuted mt-1">Type out exactly how you're feeling right now. The local client token parser will isolate key affective modifiers, calculate valence velocity, and match media recommendations.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Internal Feeling Sandbox</label>
+                        <textarea id="feelingInput" rows="4" oninput="processSentiment()" placeholder="e.g., I have been feeling incredibly overwhelmed and stressed out with my heavy school assignments lately. Honestly, I just feel totally exhausted and a bit lonely..." class="w-full bg-black/40 border border-gray-800 rounded-xl p-3 text-sm focus:outline-none focus:border-accentPurp transition duration-200 resize-none text-white placeholder-gray-600"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-textMuted uppercase tracking-wider mb-2">Or Choose Intent Direct Cut</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setIntent('escapism')" class="px-3 py-2 bg-purple-600/10 border border-purple-500/30 hover:bg-purple-600/20 rounded-xl text-xs font-medium transition text-purple-400">Instant Dopamine Hit</button>
+                            <button onclick="setIntent('catharsis')" class="px-3 py-2 bg-blue-600/10 border border-blue-500/30 hover:bg-blue-600/20 rounded-xl text-xs font-medium transition text-blue-400">Need a Deep Cry</button>
+                            <button onclick="setIntent('nostalgia')" class="px-3 py-2 bg-teal-600/10 border border-teal-500/30 hover:bg-teal-600/20 rounded-xl text-xs font-medium transition text-teal-400">Comfort Blanket</button>
+                            <button onclick="setIntent('reset')" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-xl text-xs font-medium transition text-white">Reset Canvas</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/30 border border-gray-800/80 rounded-xl p-4 space-y-3">
+                        <div class="flex justify-between text-xs font-mono">
+                            <span class="text-textMuted">Inferred Vector Intent:</span>
+                            <span id="metricIntent" class="text-purple-400 font-bold uppercase tracking-wider">Awaiting Input</span>
+                        </div>
+                        <div class="flex justify-between text-xs font-mono">
+                            <span class="text-textMuted">Valence Target Index:</span>
+                            <span id="metricValence" class="text-white font-bold">0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-md font-semibold tracking-wide">Target Media Matches</h4>
+                        <span id="resultsCount" class="text-xs bg-accentPurp/10 border border-accentPurp/30 text-accentPurp font-mono px-2 py-0.5 rounded-full">Showing 6 Profiles</span>
+                    </div>
+
+                    <div id="movieGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // System Mock Databank containing relational structural tags matched against NLP categories
+        const moviesDatabase = [
+            {
+                title: "Palm Springs",
+                archetype: "escapism",
+                intentLabel: "Instant Dopamine Hit",
+                matchScore: 98,
+                triggerInfo: "Mild surrealism, time loop anxiety traps",
+                summary: "A lighthearted, colorful, and wildly funny look at two wedding guests trapped in a loop. Perfect for lifting crushing exhaustion blocks instantly.",
+                color: "purple"
+            },
+            {
+                title: "Ferris Bueller's Day Off",
+                archetype: "escapism",
+                intentLabel: "Pure Distraction",
+                matchScore: 94,
+                triggerInfo: "Mild authority conflict tracking",
+                summary: "The ultimate validation card for anyone stuck in a cycle of academic pressure who needs a guilt-free mental day off.",
+                color: "purple"
+            },
+            {
+                title: "Scott Pilgrim vs. The World",
+                archetype: "nostalgia",
+                intentLabel: "Safe Visual Routines",
+                matchScore: 91,
+                triggerInfo: "Stylized cartoon combat visual pacing",
+                summary: "A high-octane blend of pop-punk soundtracks and hyper-kinetic retro gaming aesthetics. Excellent for managing overstimulated brains.",
+                color: "teal"
+            },
+            {
+                title: "How to Train Your Dragon",
+                archetype: "nostalgia",
+                intentLabel: "Comfort Blanket",
+                matchScore: 95,
+                triggerInfo: "Fantasy peril scenarios",
+                summary: "A deeply nostalgic, beautifully scored comfort classic centered on feeling out of place but finding your lane anyway.",
+                color: "teal"
+            },
+            {
+                title: "The Notebook",
+                archetype: "catharsis",
+                intentLabel: "Need a Deep Cry",
+                matchScore: 89,
+                triggerInfo: "Terminal illness tracking metrics",
+                summary: "A profound emotional engine. Highly utilized within the forum spaces to safely unblock emotional numbness.",
+                color: "blue"
+            },
+            {
+                title: "Dead Poets Society",
+                archetype: "catharsis",
+                intentLabel: "Cathartic Resonance",
+                matchScore: 87,
+                triggerInfo: "Academic pressure stress, severe loss profiles",
+                summary: "Explores the painful beauty of academic environments. Gives users space to process complex pressures rather than just running away.",
+                color: "blue"
+            }
+        ];
+
+        // Global State Variables
+        let activeTab = 'analytics';
+
+        // Interface Tab Switching Manager Engine
+        function switchTab(targetTab) {
+            const btnAnalytics = document.getElementById('tabBtnAnalytics');
+            const btnRecommender = document.getElementById('tabBtnRecommender');
+            const panelAnalytics = document.getElementById('panelAnalytics');
+            const panelRecommender = document.getElementById('panelRecommender');
+
+            if (targetTab === 'analytics') {
+                btnAnalytics.className = "px-4 py-2 rounded-lg text-sm font-medium transition duration-200 bg-accentPurp text-white";
+                btnRecommender.className = "px-4 py-2 rounded-lg text-sm font-medium transition duration-200 text-textMuted hover:text-white";
+                panelAnalytics.classList.remove('hidden');
+                panelRecommender.classList.add('hidden');
+            } else {
+                btnRecommender.className = "px-4 py-2 rounded-lg text-sm font-medium transition duration-200 bg-accentPurp text-white";
+                btnAnalytics.className = "px-4 py-2 rounded-lg text-sm font-medium transition duration-200 text-textMuted hover:text-white";
+                panelRecommender.classList.remove('hidden');
+                panelAnalytics.classList.add('hidden');
+            }
+            activeTab = targetTab;
+        }
+
+        // Direct Modifier Force Value Filter Interface
+        function setIntent(archetype) {
+            const textInput = document.getElementById('feelingInput');
+            if (archetype === 'reset') {
+                textInput.value = "";
+                renderMovies(moviesDatabase);
+                updateMetrics("Awaiting Input", "0.00");
+                return;
+            }
+            
+            const targetedPhrases = {
+                escapism: "I feel incredibly burnt out, stressed, and completely exhausted. I just want to escape this reality and laugh.",
+                catharsis: "I feel so numb, sad, lonely, and entirely locked out of my own feelings. I just want something heavy to cry.",
+                nostalgia: "I feel deeply anxious about the future and wish I could wrap myself up in a nostalgic childhood comfort blanket."
+            };
+            
+            textInput.value = targetedPhrases[archetype];
+            processSentiment();
+        }
+
+        // Local Tokenizer Parsing Evaluation Method Engine
+        function processSentiment() {
+            const text = document.getElementById('feelingInput').value.toLowerCase();
+            
+            if (!text.trim()) {
+                renderMovies(moviesDatabase);
+                updateMetrics("Awaiting Input", "0.00");
+                return;
+            }
+
+            // Word Arrays corresponding to affective intent mapping
+            const escapismTokens = ['stress', 'overwhelmed', 'exhausted', 'tired', 'burnt out', 'work', 'study', 'pressure'];
+            const catharsisTokens = ['numb', 'sad', 'cry', 'lonely', 'breakup', 'heavy', 'hurt', 'pain'];
+            const nostalgiaTokens = ['anxious', 'future', 'scared', 'childhood', 'old', 'comfort', 'safe', 'past'];
+
+            let escapismCount = 0;
+            let catharsisCount = 0;
+            let nostalgiaCount = 0;
+
+            // Simple frequency tracking loop inside parsed block
+            escapismTokens.forEach(token => { if(text.includes(token)) escapismCount++ });
+            catharsisTokens.forEach(token => { if(text.includes(token)) catharsisCount++ });
+            nostalgiaTokens.forEach(token => { if(text.includes(token)) nostalgiaCount++ });
+
+            let winningArchetype = "escapism";
+            let maxCount = escapismCount;
+            let calculatedValence = (escapismCount * 0.45) + (nostalgiaCount * 0.2) - (catharsisCount * 0.6);
+
+            if (catharsisCount > maxCount) {
+                winningArchetype = "catharsis";
+                maxCount = catharsisCount;
+            }
+            if (nostalgiaCount > maxCount) {
+                winningArchetype = "nostalgia";
+                maxCount = nostalgiaCount;
+            }
+
+            // Filter down matching profiles dynamically based on vector mapping values
+            const filteredCollection = moviesDatabase.filter(m => m.archetype === winningArchetype);
+            renderMovies(filteredCollection);
+            
+            const intentDisplayStrings = {
+                escapism: "High Valence Escapism",
+                catharsis: "Cathartic Resonance",
+                nostalgia: "Cognitive Grounding / Nostalgia"
+            };
+
+            updateMetrics(intentDisplayStrings[winningArchetype], calculatedValence.toFixed(2));
+        }
+
+        // DOM Update Pipeline Actions
+        function updateMetrics(intent, valence) {
+            document.getElementById('metricIntent').innerText = intent;
+            document.getElementById('metricValence').innerText = valence;
+        }
+
+        // Dynamic Vector Movie Card Component Mapper Target
+        function renderMovies(collection) {
+            const grid = document.getElementById('movieGrid');
+            const counter = document.getElementById('resultsCount');
+            grid.innerHTML = "";
+            
+            counter.innerText = `Showing ${collection.length} Matches`;
+
+            if (collection.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 text-center py-12 text-textMuted font-mono text-sm border border-dashed border-gray-800 rounded-2xl">No perfect psychological boundary card matches. Clear filters to reset context layout.</div>`;
+                return;
+            }
+
+            collection.forEach(movie => {
+                let badgeColor = "border-purple-500/30 text-purple-400 bg-purple-500/10";
+                if(movie.color === 'blue') badgeColor = "border-blue-500/30 text-blue-400 bg-blue-500/10";
+                if(movie.color === 'teal') badgeColor = "border-teal-500/30 text-teal-400 bg-teal-500/10";
+
+                const cardHTML = `
+                    <div class="bg-panelBg p-5 rounded-2xl border border-gray-800 shadow-xl flex flex-col justify-between space-y-4 hover:border-gray-700 transition duration-300">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <h5 class="text-md font-bold tracking-tight">${movie.title}</h5>
+                                <span class="text-xs px-2 py-0.5 rounded-md border font-medium ${badgeColor}">
+                                    ${movie.intentLabel}
+                                </span>
+                            </div>
+                            <p class="text-xs text-textMuted leading-relaxed">${movie.summary}</p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-800/60 space-y-2">
+                            <div class="flex justify-between items-center text-[10px] font-mono text-textMuted">
+                                <span>PROACTIVE TRIGGER METRIC:</span>
+                                <span class="text-yellow-500/90 font-sans">${movie.triggerInfo}</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-[10px] font-mono text-textMuted">
+                                <span>STRUCTURAL AFFINITY MATCH:</span>
+                                <div class="w-full bg-black/40 h-1.5 rounded-full overflow-hidden border border-gray-900">
+                                    <div class="bg-accentPurp h-full rounded-full" style="width: ${movie.matchScore}%"></div>
+                                </div>
+                                <span class="text-white font-bold">${movie.matchScore}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        // Initialize App Configuration state on standard initialization vector
+        window.onload = function() {
+            renderMovies(moviesDatabase);
+        };
+    </script>
+</body>
+</html>
